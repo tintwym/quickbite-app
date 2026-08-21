@@ -1,4 +1,4 @@
-import { useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import {
     ActivityIndicator,
@@ -35,6 +35,11 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.logo}>🍽️ QuickBite</Text>
+        <Link href="/settings" asChild>
+          <TouchableOpacity>
+            <Text style={styles.gear}>⚙️</Text>
+          </TouchableOpacity>
+        </Link>
       </View>
 
       {loading ? (
@@ -66,6 +71,9 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#fff" },
   header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingTop: 60,
     paddingBottom: 16,
     paddingHorizontal: 20,
@@ -73,6 +81,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "#eee",
   },
   logo: { fontSize: 22, fontWeight: "700", color: "#ff6b35" },
+  gear: { fontSize: 22 },
   list: { padding: 16 },
   card: {
     flexDirection: "row",
