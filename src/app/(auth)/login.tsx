@@ -1,24 +1,30 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { useRouter, Link } from 'expo-router';
+import { Link, useRouter } from "expo-router";
+import { useState } from "react";
+import {
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
+} from "react-native";
 
 export default function LoginScreen() {
   const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleLogin = () => {
     if (!email || !password) {
-      setError('Email and password are required.');
+      setError("Email and password are required.");
       return;
     }
-    if (!email.includes('@')) {
-      setError('Please enter a valid email address.');
+    if (!email.includes("@")) {
+      setError("Please enter a valid email address.");
       return;
     }
-    setError('');
-    router.replace('/');
+    setError("");
+    router.replace("/auth/login");
   };
 
   return (
@@ -47,7 +53,7 @@ export default function LoginScreen() {
         <Text style={styles.buttonText}>Log In</Text>
       </TouchableOpacity>
 
-      <Link href="/signup" style={styles.link}>
+      <Link href="/auth/signup" style={styles.link}>
         Don't have an account? Sign up
       </Link>
     </View>
@@ -55,24 +61,34 @@ export default function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', padding: 24, backgroundColor: '#fff' },
-  title: { fontSize: 28, fontWeight: '700', marginBottom: 24, textAlign: 'center' },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    padding: 24,
+    backgroundColor: "#fff",
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: "700",
+    marginBottom: 24,
+    textAlign: "center",
+  },
   input: {
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: "#ddd",
     borderRadius: 8,
     padding: 12,
     marginBottom: 12,
     fontSize: 16,
   },
-  error: { color: '#d32f2f', marginBottom: 12, textAlign: 'center' },
+  error: { color: "#d32f2f", marginBottom: 12, textAlign: "center" },
   button: {
-    backgroundColor: '#ff6b35',
+    backgroundColor: "#ff6b35",
     borderRadius: 8,
     padding: 14,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 8,
   },
-  buttonText: { color: '#fff', fontSize: 16, fontWeight: '600' },
-  link: { color: '#ff6b35', textAlign: 'center', marginTop: 16 },
+  buttonText: { color: "#fff", fontSize: 16, fontWeight: "600" },
+  link: { color: "#ff6b35", textAlign: "center", marginTop: 16 },
 });
