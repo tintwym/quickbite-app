@@ -1,6 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, Switch, TouchableOpacity, StyleSheet, Platform, Alert } from 'react-native';
-import * as Notifications from 'expo-notifications';
+import * as Notifications from "expo-notifications";
+import React, { useEffect, useState } from "react";
+import {
+    Alert,
+    Platform,
+    StyleSheet,
+    Switch,
+    Text,
+    TouchableOpacity,
+    View,
+} from "react-native";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -17,16 +25,19 @@ export default function NotificationSettingsScreen() {
 
   useEffect(() => {
     Notifications.getPermissionsAsync().then(({ status }) => {
-      setEnabled(status === 'granted');
+      setEnabled(status === "granted");
     });
   }, []);
 
   const handleToggle = async (value: boolean) => {
     if (value) {
       const { status } = await Notifications.requestPermissionsAsync();
-      setEnabled(status === 'granted');
-      if (status !== 'granted') {
-        Alert.alert('Permission needed', 'Enable notifications in your device settings.');
+      setEnabled(status === "granted");
+      if (status !== "granted") {
+        Alert.alert(
+          "Permission needed",
+          "Enable notifications in your device settings.",
+        );
       }
     } else {
       setEnabled(false);
@@ -35,15 +46,25 @@ export default function NotificationSettingsScreen() {
 
   const sendTestNotification = async () => {
     if (!enabled) {
-      Alert.alert('Enable notifications first', 'Turn on the toggle above to send a test.');
+      Alert.alert(
+        "Enable notifications first",
+        "Turn on the toggle above to send a test.",
+      );
       return;
     }
     await Notifications.scheduleNotificationAsync({
       content: {
-        title: 'QuickBite',
-        body: 'This is a test notification 🍽️',
+        title: "QuickBite",
+        body: "This is a test notification 🍽️",
       },
-      trigger: Platform.OS === 'web' ? null : { seconds: 2 },
+      trigger:
+        Platform.OS === "web"
+          ? null
+          : {
+              type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
+              seconds: 2,
+              repeats: false,
+            },
     });
   };
 
@@ -66,32 +87,32 @@ export default function NotificationSettingsScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
+  container: { flex: 1, backgroundColor: "#fff" },
   header: {
     paddingTop: 60,
     paddingBottom: 16,
     paddingHorizontal: 20,
     borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    borderBottomColor: "#eee",
   },
-  title: { fontSize: 22, fontWeight: '700', color: '#ff6b35' },
+  title: { fontSize: 22, fontWeight: "700", color: "#ff6b35" },
   row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingHorizontal: 20,
     paddingVertical: 20,
     borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
+    borderBottomColor: "#f0f0f0",
   },
   label: { fontSize: 16 },
   button: {
-    backgroundColor: '#ff6b35',
+    backgroundColor: "#ff6b35",
     borderRadius: 8,
     padding: 14,
-    alignItems: 'center',
+    alignItems: "center",
     marginHorizontal: 20,
     marginTop: 24,
   },
-  buttonText: { color: '#fff', fontSize: 16, fontWeight: '600' },
+  buttonText: { color: "#fff", fontSize: 16, fontWeight: "600" },
 });
